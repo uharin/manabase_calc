@@ -1,18 +1,18 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <BaseForm msg="Welcome to Your Vue.js App"/>
+    <AdvancedFilter/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import BaseForm from './components/BaseForm.vue';
+  import AdvancedFilter from './components/AdvancedFilter.vue';
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  export default {
+    name: 'App',
+    components: { BaseForm, AdvancedFilter }
 }
 </script>
 
