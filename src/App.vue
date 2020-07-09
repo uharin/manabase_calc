@@ -3,19 +3,18 @@
       <b-container fluid="md" class="main-container">
         <img alt="EDH logo" src="./assets/MTG_commander.png">
         <BaseForm/>
-        <AdvancedFilter/>
-        <b-button block class="mt-3" variant="info">Calculate</b-button>
+        <Results/>
       </b-container>
     </div>
 </template>
 
 <script>
   import BaseForm from './components/BaseForm.vue';
-  import AdvancedFilter from './components/AdvancedFilter.vue';
+  import Results from './components/Results.vue';
 
   export default {
     name: 'App',
-    components: { BaseForm, AdvancedFilter }
+    components: { BaseForm, Results }
   }
 </script>
 
