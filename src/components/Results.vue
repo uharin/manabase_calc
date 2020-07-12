@@ -1,50 +1,60 @@
 <template>
-    <div id="results">
-			<p>After drawing 7 cards, on average you will have</p>
+    <div class="my-4" id="results">
+			<b-button variant="info" v-on:click="toggleManaProductionPane()">{{manaProductionStatus}} Mana Production Averages</b-button>
+			<p class="py-3">After drawing {{totalCardsDrawn}} cards, on average you will have</p>
 			<b-row class="flex f-row">
-				<div class="summary-box f-column" style="background: #205a86;"><p class="display-4">1</p><p>Lands</p></div>
-				<div class="summary-box" style="background: #ceae1a;"><p class="display-4">2</p><p>Artifacts</p></div>
-				<div class="summary-box" style="background: #158c51;"><p class="display-4">3</p><p>Dorks</p></div>
+				<div class="summary-box f-column" 
+						v-for="item in items"
+						:key="item.id"
+						:class="{
+							blue: item.type === 'lands', 
+							yellow: item.type === 'rocks',
+							green: item.type === 'dorks'}">
+					<p class="display-4">{{item.resultsTypeAverage}}</p>
+					<p class="text-capitalize">{{item.type}}</p> 
+				</div>
 			</b-row>
 			<b-button variant="danger" class="my-4" v-on:click="toggleDetailsPane()">{{showDetailsStatus}} Details</b-button>
-			<table v-if="showDetails" class="my-3">
-				<thead class="table table-striped">
+			<table class="table table-striped my-3" v-if="showDetails">
+				<thead >
 					<tr>
-						<th scope="col">Source</th>
-						<th scope="col">White</th>
-						<th scope="col">Blue</th>
-						<th scope="col">Black</th>
-						<th scope="col">Red</th>
-						<th scope="col">Green</th>
-						<th scope="col">Colorless Only</th>
+						<th scope="col">Type</th>
+						<td scope="col">1</td>
+						<td scope="col">2</td>
+						<td scope="col">3</td>
+						<td scope="col">4</td>
+						<td scope="col">5</td>
+						<td scope="col">6</td>
+						<td scope="col">7</td>
+						<td scope="col">8</td>
+						<td scope="col">9</td>
+						<td scope="col">10</td>
 					</tr>
-					<tbody>
-						<tr>
-							<th scope="row">Lands</th>
-							<td>chance</td>
-						</tr>
-						<tr>
-							<th scope="row">Mana Rocks</th>
-							<td >chance</td>
-						</tr>
-						<tr>
-							<th scope="row">Dorks</th>
-							<td >chance</td>
-						</tr>
-						</tbody>
 				</thead>
+				<tbody>
+					<tr v-for="item in items" :key="item.id">
+						<th scope="row" class="text-capitalize">{{item.type}}</th>
+						<td v-for="result in item.results[item.type]" :key="result" >{{result}}%</td>
+					</tr>
+				</tbody>
 			</table>
-			<b-button variant="primary" class="my-4" block>Show Next Draw</b-button>
     </div>
 </template>
 
 <script>
   export default {
 		name: 'Results',
+		props: { 
+			items: Array,
+			colors: Array,
+			totalCardsDrawn: Number 
+		},
 		data: function() {
       return {
 				showDetails: false,
-				showDetailsStatus: "Show"
+				showDetailsStatus: "Show",
+				manaProductionDetails: false,
+				manaProductionStatus: "Show"
 			}
     },
 
@@ -53,6 +63,11 @@
       toggleDetailsPane(){
 				this.showDetails = !this.showDetails;
 				this.showDetails ? this.showDetailsStatus = "Hide" : this.showDetailsStatus = "Show";
+			},
+			
+			toggleManaProductionPane(){
+				this.manaProductionDetails = !this.manaProductionDetails;
+				this.manaProductionDetails ? this.manaProductionStatus = "Hide" : this.manaProductionStatus = "Show";
       }
     }
   }
@@ -72,6 +87,10 @@
 	.f-column {
 		flex-direction: column;
 	}
+
+	.green { background: #158c51; }
+	.yellow { background: #ceae1a; }
+	.blue { background: #205a86; }
 
 	.summary-box {
 		width: 27%;

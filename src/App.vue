@@ -1,20 +1,17 @@
 <template>
     <div id="app">
       <b-container fluid="md" class="main-container">
-        <img alt="EDH logo" src="./assets/MTG_commander.png">
         <BaseForm/>
-        <Results/>
       </b-container>
     </div>
 </template>
 
 <script>
   import BaseForm from './components/BaseForm.vue';
-  import Results from './components/Results.vue';
 
   export default {
     name: 'App',
-    components: { BaseForm, Results }
+    components: { BaseForm }
   }
 </script>
 
@@ -26,12 +23,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
-    background-color:#34495E;
+    color: #1d3557;
+    background-color:#1d3557;
     padding:3em;
   }
   .main-container {
-    background-color: #41B883;
+    background-color: #a8dadc;
     margin: auto;
     padding: 50px;
     border-radius: 25px;

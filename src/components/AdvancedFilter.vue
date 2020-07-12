@@ -1,16 +1,15 @@
 <template>
   <div class="px-3">
-    <b-button class="my-4" variant="danger" v-on:click="toggleAdvFilters()">{{advFilterStatus}} Advanced Filters</b-button>
-    <div v-if="showAdvancedFilters" class="px-4 py-4 adv-filters">
+    <div class="px-4 py-4 adv-filters">
       <h3>Advanced Filters</h3>
       <p class="text-justify pt-3"><strong>NOTE: </strong>{{sectionInfo}}</p>
-      <b-input-group v-for="item in items" :key="item.id" class="mb-1 pt-4">
+      <b-input-group v-for="(item, parentIndex) in items" :key="item.id" class="mb-1 pt-4">
         <label>How many {{item.type}} produce the following mana?</label>
         <b-row>
           <b-col class="py-2 px-2 color-column" v-for="(color, index) in colors" :key="index" v-bind:class="color">
             <label class="text-capitalize">{{color}}</label>
             <b-form-input 
-              v-on:click="advFilterClick"
+              v-on:click="advFilterClick(item, parentIndex)"
               v-model="item.totals[color]" 
               :aria-label="item-color" 
               placeholder="0"  
@@ -68,22 +67,14 @@
         ],
         colors: [ "white", "blue", "black", "red", "green", "colorless"],
         sectionInfo: "In  the case of mana sources that can produce multiple types of mana colors (ex. Shock lands, Rainbow lands), increase the counter for each color that land could possibly produce (Fetch lands included). The colorless field is reserved for lands that only produce colorless mana.",
-        showAdvancedFilters: false,
-        advFilterStatus: "Show"
       }
     },
     methods: {
 
-      toggleAdvFilters(){ 
-        this.showAdvancedFilters = !this.showAdvancedFilters;
-        this.showAdvancedFilters ? this.advFilterStatus = "Hide" : this.advFilterStatus = "Show";
-      },
-
       printTotals(){ console.log(this.items); },
 
-      advFilterClick(){
-        console.log("items sent are ", this.items);
-        this.$emit('advFilterClick', this.items)
+      advFilterClick(item, itemIndex){
+        this.$emit('advFilterClick', item, itemIndex)
       }
     }
   }
@@ -91,7 +82,7 @@
 
 <style scoped>
   .adv-filters {
-    background-color: #B2DFDB;
+    background-color: #f1faee;
     border-radius: 10px;
   }
   .color-column {
